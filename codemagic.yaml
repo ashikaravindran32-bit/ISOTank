@@ -8,25 +8,25 @@ workflows:
       xcode: latest
 
     scripts:
-      - name: Install .NET 9 SDK
+      - name: Install .NET SDK
         script: |
           curl -fsSL https://dot.net/v1/dotnet-install.sh -o dotnet-install.sh
           chmod +x dotnet-install.sh
-          ./dotnet-install.sh --channel 9.0
+          ./dotnet-install.sh --version 9.0.120
           export PATH="$HOME/.dotnet:$PATH"
-          dotnet --version
+          dotnet --info
 
-      - name: Install MAUI Workloads
+      - name: Install MAUI workload
         script: |
           export PATH="$HOME/.dotnet:$PATH"
-          dotnet workload install maui
+          dotnet workload install maui --skip-manifest-update
 
-      - name: Restore Packages
+      - name: Restore
         script: |
           export PATH="$HOME/.dotnet:$PATH"
           dotnet restore ISOTankApp/ISOTankApp.csproj
 
-      - name: Publish iOS IPA
+      - name: Publish iOS
         script: |
           export PATH="$HOME/.dotnet:$PATH"
 
@@ -34,8 +34,9 @@ workflows:
             -f net9.0-ios \
             -c Release \
             -r ios-arm64 \
-            -p:ArchiveOnBuild=true \
-            -p:BuildIpa=true
+            -p:PlatformTarget=AnyCPU \
+            -p:BuildIpa=true \
+            -p:ArchiveOnBuild=true
 
     artifacts:
       - "**/*.ipa"
