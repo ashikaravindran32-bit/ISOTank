@@ -1,43 +1,41 @@
 workflows:
   ios-release:
     name: Build .NET MAUI iOS
-    max_build_duration: 120
     instance_type: mac_mini_m2
+    max_build_duration: 120
 
     environment:
       xcode: latest
       vars:
-        DOTNET_PATH: $CM_BUILD_DIR/dotnet
-        DOTNET: $CM_BUILD_DIR/dotnet/dotnet
         PROJECT_PATH: ISOTankApp/ISOTankApp.csproj
 
     scripts:
       - name: Install .NET 9 SDK
         script: |
-          wget https://dot.net/v1/dotnet-install.sh
+          curl -fsSL https://dot.net/v1/dotnet-install.sh -o dotnet-install.sh
           chmod +x dotnet-install.sh
-          ./dotnet-install.sh --channel 9.0 --install-dir $DOTNET_PATH
-          $DOTNET --version
+          ./dotnet-install.sh --channel 9.0
+          export PATH="$HOME/.dotnet:$PATH"
+          dotnet --info
 
-      - name: Install MAUI Workload
+      - name: Install MAUI Workloads
         script: |
-          $DOTNET nuget locals all --clear
-          $DOTNET workload install ios maui \
-            --source https://api.nuget.org/v3/index.json
+          export PATH="$HOME/.dotnet:$PATH"
+          dotnet workload install maui
 
-      - name: Restore Packages
+      - name: Restore
         script: |
-          $DOTNET restore $PROJECT_PATH
+          export PATH="$HOME/.dotnet:$PATH"
+          dotnet restore "$PROJECT_PATH"
 
       - name: Publish iOS
         script: |
-          $DOTNET publish $PROJECT_PATH \
+          export PATH="$HOME/.dotnet:$PATH"
+          dotnet publish "$PROJECT_PATH" \
             -f net9.0-ios \
             -c Release \
-            -p:ArchiveOnBuild=true \
-            -o $CM_BUILD_DIR/artifacts
+            -p:ArchiveOnBuild=true
 
     artifacts:
-      - artifacts/**/*.ipa
-      - artifacts/**/*.app
-      - artifacts/**/*.xcarchive
+      - "**/*.ipa"
+      - "**/*.xcarchive"
