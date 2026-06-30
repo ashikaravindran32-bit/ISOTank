@@ -28,13 +28,16 @@ workflows:
           export PATH="$HOME/.dotnet:$PATH"
           dotnet restore "$PROJECT_PATH"
 
-      - name: Publish iOS
-        script: |
-          export PATH="$HOME/.dotnet:$PATH"
-          dotnet publish "$PROJECT_PATH" \
-            -f net9.0-ios \
-            -c Release \
-            -p:ArchiveOnBuild=true
+     - name: Publish iOS
+  script: |
+    export PATH="$HOME/.dotnet:$PATH"
+
+    dotnet publish ISOTankApp/ISOTankApp.csproj \
+      -f net9.0-ios \
+      -c Release \
+      -p:RuntimeIdentifier=ios-arm64 \
+      -p:ArchiveOnBuild=true \
+      -p:BuildIpa=true
 
     artifacts:
       - "**/*.ipa"
