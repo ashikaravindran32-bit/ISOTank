@@ -1,0 +1,3 @@
+C:\Ashika Project\ISO Tank Management\ISOTankApp\bin\Release\net9.0-android\publish\com.companyname.isotankapp-Signed.apk
+C:\Ashika Project\ISO Tank Management\ISOTankApp\bin\Release\net9.0-android\publish\com.companyname.isotankapp.apk
+C:\Ashika Project\ISO Tank Management\ISOTankApp\bin\Release\net9.0-android\publish\_Microsoft.Android.Resource.Designer.dll

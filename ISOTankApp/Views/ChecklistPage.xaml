@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:ISOTankApp.Models"
+             xmlns:helpers="clr-namespace:ISOTankApp.Helpers"
+             x:Class="ISOTankApp.Views.ChecklistPage"
+             Title="Checklist"
+             BackgroundColor="#F3F5F7"
+             Shell.NavBarIsVisible="False"
+             Shell.TabBarIsVisible="False">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="30" Spacing="20">
+            <!-- Header -->
+            <HorizontalStackLayout Spacing="10" Margin="0,0,0,10">
+                <Label Text="&#xf060;" FontFamily="FontAwesome" FontSize="14" TextColor="#6C757D" VerticalOptions="Center"/>
+                <Label x:Name="PageTitleHeader" Text="NEW REPORT" FontSize="14" FontAttributes="Bold" TextColor="#1F3C59" VerticalOptions="Center" TextTransform="Uppercase"/>
+            </HorizontalStackLayout>
+
+            <!-- Custom Tab Bar -->
+            <Grid Margin="0,0,0,20">
+                <BoxView HeightRequest="2" Color="#E9ECEF" VerticalOptions="Start" Margin="50,24,50,0" />
+                <Grid ColumnDefinitions="*,*,*,*">
+                    <!-- Tank Info Tab -->
+                    <VerticalStackLayout Grid.Column="0" HorizontalOptions="Center" Spacing="5" helpers:CursorHelper.IsPointer="True">
+                        <VerticalStackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnTankInfoTapped" />
+                        </VerticalStackLayout.GestureRecognizers>
+                        <Border StrokeShape="{OnIdiom Phone='RoundRectangle 18', Default='RoundRectangle 25'}" HeightRequest="{OnIdiom Phone=36, Default=50}" WidthRequest="{OnIdiom Phone=36, Default=50}" BackgroundColor="#E9ECEF" Padding="0" Stroke="Transparent" StrokeThickness="0">
+                            <Label Text="&#xf0ae;" FontFamily="FontAwesome" FontSize="{OnIdiom Phone=14, Default=20}" TextColor="#28A745" HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </Border>
+                        <Label Text="TANK INFO" FontSize="{OnIdiom Phone=9, Default=12}" FontAttributes="Bold" TextColor="#28A745" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+                    </VerticalStackLayout>
+                    
+                    <!-- Upload Photos Tab -->
+                    <VerticalStackLayout Grid.Column="1" HorizontalOptions="Center" Spacing="5" helpers:CursorHelper.IsPointer="True">
+                        <VerticalStackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnUploadPhotosTapped" />
+                        </VerticalStackLayout.GestureRecognizers>
+                        <Border StrokeShape="{OnIdiom Phone='RoundRectangle 18', Default='RoundRectangle 25'}" HeightRequest="{OnIdiom Phone=36, Default=50}" WidthRequest="{OnIdiom Phone=36, Default=50}" BackgroundColor="#E9ECEF" Padding="0" Stroke="Transparent" StrokeThickness="0">
+                            <Label Text="&#xf03e;" FontFamily="FontAwesome" FontSize="{OnIdiom Phone=14, Default=20}" TextColor="#28A745" HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </Border>
+                        <Label Text="UPLOAD PHOTOS" FontSize="{OnIdiom Phone=9, Default=12}" FontAttributes="Bold" TextColor="#28A745" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+                    </VerticalStackLayout>
+                    
+                    <!-- Checklist Tab (Active) -->
+                    <VerticalStackLayout Grid.Column="2" HorizontalOptions="Center" Spacing="5" helpers:CursorHelper.IsPointer="True">
+                        <Border StrokeShape="{OnIdiom Phone='RoundRectangle 18', Default='RoundRectangle 25'}" HeightRequest="{OnIdiom Phone=36, Default=50}" WidthRequest="{OnIdiom Phone=36, Default=50}" BackgroundColor="#28A745" Padding="0" Stroke="Transparent" StrokeThickness="0">
+                            <Label Text="&#xf046;" FontFamily="FontAwesome" FontSize="{OnIdiom Phone=14, Default=20}" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </Border>
+                        <Label Text="CHECKLIST" FontSize="{OnIdiom Phone=9, Default=12}" FontAttributes="Bold" TextColor="#28A745" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+                    </VerticalStackLayout>
+                    
+                    <!-- Review & Submit Tab -->
+                    <VerticalStackLayout Grid.Column="3" HorizontalOptions="Center" Spacing="5" helpers:CursorHelper.IsPointer="True">
+                        <VerticalStackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnReviewTapped" />
+                        </VerticalStackLayout.GestureRecognizers>
+                        <Border StrokeShape="{OnIdiom Phone='RoundRectangle 18', Default='RoundRectangle 25'}" HeightRequest="{OnIdiom Phone=36, Default=50}" WidthRequest="{OnIdiom Phone=36, Default=50}" BackgroundColor="#E9ECEF" Padding="0" Stroke="Transparent" StrokeThickness="0">
+                            <Label Text="&#xf06e;" FontFamily="FontAwesome" FontSize="{OnIdiom Phone=14, Default=20}" TextColor="#28A745" HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </Border>
+                        <Label Text="REVIEW &amp; SUBMIT" FontSize="{OnIdiom Phone=9, Default=12}" FontAttributes="Bold" TextColor="#28A745" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+                    </VerticalStackLayout>
+                </Grid>
+            </Grid>
+
+            <!-- Loading Spinner -->
+            <ActivityIndicator x:Name="LoadingSpinner" IsRunning="False" IsVisible="False" HorizontalOptions="Center" Color="#28A745" Margin="20"/>
+
+            <!-- Checklist Container -->
+            <CollectionView x:Name="ChecklistCollectionView">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border Stroke="#CED4DA" StrokeThickness="1" StrokeShape="RoundRectangle 8" BackgroundColor="White" Padding="0" Margin="0,0,0,20">
+                            <VerticalStackLayout Spacing="0">
+                                <!-- Category Header -->
+                                <Grid BackgroundColor="#F8F9FA" Padding="15,12">
+                                    <Grid ColumnDefinitions="Auto, *" ColumnSpacing="10" VerticalOptions="Center">
+                                        <Label Grid.Column="0" Text="&#xf111;" FontFamily="FontAwesome" FontSize="10" TextColor="#28A745" VerticalOptions="Start" Margin="0,4,0,0"/>
+                                        <Label Grid.Column="1" Text="{Binding JobName}" FontSize="14" FontAttributes="Bold" TextColor="#6C757D" TextTransform="Uppercase" VerticalOptions="Center" LineBreakMode="WordWrap"/>
+                                    </Grid>
+                                </Grid>
+                                
+                                <BoxView HeightRequest="1" Color="#CED4DA" />
+
+                                <!-- Items List -->
+                                <StackLayout BindableLayout.ItemsSource="{Binding Items}">
+                                    <BindableLayout.ItemTemplate>
+                                        <DataTemplate>
+                                            <VerticalStackLayout>
+                                                <Grid ColumnDefinitions="*, Auto" Padding="15" BackgroundColor="White" helpers:CursorHelper.IsPointer="True">
+                                                    <Grid.GestureRecognizers>
+                                                        <TapGestureRecognizer Tapped="OnItemTapped" CommandParameter="{Binding .}" />
+                                                    </Grid.GestureRecognizers>
+                                                    
+                                                    <Label Grid.Column="0" Text="{Binding DisplayTitle}" FontSize="13" TextColor="#495057" VerticalOptions="Center" LineBreakMode="WordWrap"/>
+                                                    
+                                                    <!-- Toggle Indicator (Circle) -->
+                                                    <Border Grid.Column="1" WidthRequest="20" HeightRequest="20" BackgroundColor="{Binding StatusColor}" Padding="0" StrokeShape="RoundRectangle 10" VerticalOptions="Center" />
+                                                </Grid>
+
+                                                <!-- Fault Description Box -->
+                                                <Border IsVisible="{Binding IsFaulty}" BackgroundColor="#FFF5F5" Stroke="#F8D7DA" StrokeThickness="1" StrokeShape="RoundRectangle 5" Padding="10" Margin="40,0,15,15">
+                                                    <Editor Placeholder="Describe the fault here..." Text="{Binding Comment}" HeightRequest="50" BackgroundColor="Transparent" FontSize="13" TextColor="#495057"/>
+                                                </Border>
+
+                                                <!-- Assign Marked Photos -->
+                                                <Border IsVisible="{Binding ShowAssignmentOptions}" BackgroundColor="White" Stroke="#F8D7DA" StrokeThickness="1" StrokeShape="RoundRectangle 5" Padding="15" Margin="40,10,15,25">
+                                                    <VerticalStackLayout>
+                                                        <Label Text="ASSIGN MARKED PHOTOS:" FontSize="10" FontAttributes="Bold" TextColor="#6C757D" Margin="0,0,0,10"/>
+                                                        <FlexLayout BindableLayout.ItemsSource="{Binding AssignmentOptions}" Wrap="Wrap" JustifyContent="Start">
+                                                            <BindableLayout.ItemTemplate>
+                                                                <DataTemplate>
+                                                                    <HorizontalStackLayout Spacing="5" Margin="0,0,15,10" helpers:CursorHelper.IsPointer="True">
+                                                                        <HorizontalStackLayout.GestureRecognizers>
+                                                                            <TapGestureRecognizer Tapped="OnAssignPhotoTapped" CommandParameter="{Binding .}" />
+                                                                        </HorizontalStackLayout.GestureRecognizers>
+                                                                        
+                                                                        <!-- Checkbox (Square) -->
+                                                                        <Border WidthRequest="18" HeightRequest="18" Stroke="#CED4DA" StrokeThickness="1.5" BackgroundColor="White" Padding="0" StrokeShape="RoundRectangle 2">
+                                                                            <Border.Triggers>
+                                                                                <DataTrigger TargetType="Border" Binding="{Binding IsSelected}" Value="True">
+                                                                                    <Setter Property="BackgroundColor" Value="#28A745" />
+                                                                                    <Setter Property="Stroke" Value="#28A745" />
+                                                                                </DataTrigger>
+                                                                            </Border.Triggers>
+                                                                            <Label Text="&#xf00c;" FontFamily="FontAwesome" FontSize="10" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" IsVisible="{Binding IsSelected}" />
+                                                                        </Border>
+                                                                        <Label Text="{Binding Photo.Category.Name}" FontSize="11" TextColor="#6C757D" VerticalOptions="Center"/>
+                                                                    </HorizontalStackLayout>
+                                                                </DataTemplate>
+                                                            </BindableLayout.ItemTemplate>
+                                                        </FlexLayout>
+                                                    </VerticalStackLayout>
+                                                </Border>
+
+                                                <BoxView HeightRequest="1" Color="#E9ECEF" Margin="0,0,0,0" />
+                                            </VerticalStackLayout>
+                                        </DataTemplate>
+                                    </BindableLayout.ItemTemplate>
+                                </StackLayout>
+                            </VerticalStackLayout>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <!-- Action Buttons -->
+            <HorizontalStackLayout Spacing="{OnIdiom Phone=10, Default=15}" Margin="0,10,0,20" HorizontalOptions="End">
+                <Button Text="CANCEL" Clicked="OnUploadPhotosTapped" helpers:CursorHelper.IsPointer="True" BackgroundColor="#6C757D" TextColor="White" CornerRadius="5" WidthRequest="{OnIdiom Phone=100, Default=120}" HeightRequest="45" FontSize="{OnIdiom Phone=12, Default=14}" FontAttributes="Bold" Padding="0"/>
+                <Button Text="SAVE &amp; NEXT" Clicked="OnSaveAndNextTapped" helpers:CursorHelper.IsPointer="True" BackgroundColor="#28A745" TextColor="White" CornerRadius="5" WidthRequest="{OnIdiom Phone=120, Default=160}" HeightRequest="45" FontSize="{OnIdiom Phone=12, Default=14}" FontAttributes="Bold" Padding="0"/>
+            </HorizontalStackLayout>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

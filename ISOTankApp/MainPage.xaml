@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ISOTankApp.MainPage"
+             Title="Inspection Basic Info">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+            
+            <Label Text="Inspection Basic Info" FontSize="24" FontAttributes="Bold" HorizontalOptions="Center" Margin="0,0,0,20"/>
+
+            <Label Text="Report Number" FontAttributes="Bold" />
+            <Entry x:Name="ReportNumberEntry" Placeholder="Enter report number" />
+
+            <Label Text="Tank Number" FontAttributes="Bold" />
+            <Entry x:Name="TankNumberEntry" Placeholder="Enter tank number" />
+
+            <Label Text="Frame Type" FontAttributes="Bold" />
+            <Picker x:Name="FrameTypePicker" Title="Select Frame Type">
+                <Picker.Items>
+                    <x:String>Frame T-1/Frame Tank</x:String>
+                    <x:String>Frame T-2/Beam Tank</x:String>
+                    <x:String>Frame T-3/Others</x:String>
+                </Picker.Items>
+            </Picker>
+
+            <Label Text="Cabinet Type" FontAttributes="Bold" />
+            <Picker x:Name="CabinetTypePicker" Title="Select Cabinet Type">
+                <Picker.Items>
+                    <x:String>NA</x:String>
+                    <x:String>Side-1/Full Door</x:String>
+                    <x:String>Side-2/Half Door</x:String>
+                    <x:String>Back</x:String>
+                </Picker.Items>
+            </Picker>
+
+            <Label Text="Manufacturer" FontAttributes="Bold" />
+            <Entry x:Name="ManufacturerEntry" Placeholder="Enter manufacturer" />
+
+            <Label Text="Vacuum Reading" FontAttributes="Bold" />
+            <Entry x:Name="VacuumReadingEntry" Placeholder="e.g., -0.5 bar" />
+
+            <Label Text="Notes" FontAttributes="Bold" />
+            <Editor x:Name="NotesEditor" Placeholder="Enter any notes or observations..." HeightRequest="100" />
+
+            <Button Text="Save Inspection" Clicked="OnSaveClicked" BackgroundColor="#007ACC" TextColor="White" Margin="0,20,0,0" CornerRadius="8" HeightRequest="50" />
+            
+            <ActivityIndicator x:Name="LoadingSpinner" IsRunning="False" IsVisible="False" HorizontalOptions="Center" Margin="0,10,0,0" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

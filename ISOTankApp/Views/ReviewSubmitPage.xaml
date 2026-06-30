@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:ISOTankApp.Models"
+             xmlns:helpers="clr-namespace:ISOTankApp.Helpers"
+             x:Class="ISOTankApp.Views.ReviewSubmitPage"
+             Title="Review &amp; Submit"
+             BackgroundColor="#F3F5F7"
+             Shell.NavBarIsVisible="False"
+             Shell.TabBarIsVisible="False">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="30" Spacing="20">
+            <!-- Header -->
+            <HorizontalStackLayout Spacing="10" Margin="0,0,0,10">
+                <Label Text="&#xf060;" FontFamily="FontAwesome" FontSize="14" TextColor="#6C757D" VerticalOptions="Center"/>
+                <Label x:Name="PageTitleHeader" Text="NEW REPORT" FontSize="14" FontAttributes="Bold" TextColor="#1F3C59" VerticalOptions="Center" TextTransform="Uppercase"/>
+            </HorizontalStackLayout>
+
+            <!-- Custom Tab Bar -->
+            <Grid Margin="0,0,0,20">
+                <BoxView HeightRequest="2" Color="#E9ECEF" VerticalOptions="Start" Margin="50,24,50,0" />
+                <Grid ColumnDefinitions="*,*,*,*">
+                    <VerticalStackLayout Grid.Column="0" HorizontalOptions="Center" Spacing="5" helpers:CursorHelper.IsPointer="True">
+                        <VerticalStackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnTankInfoTapped" />
+                        </VerticalStackLayout.GestureRecognizers>
+                        <Border StrokeShape="{OnIdiom Phone='RoundRectangle 18', Default='RoundRectangle 25'}" HeightRequest="{OnIdiom Phone=36, Default=50}" WidthRequest="{OnIdiom Phone=36, Default=50}" BackgroundColor="#E9ECEF" Padding="0" Stroke="Transparent" StrokeThickness="0">
+                            <Label Text="&#xf0ae;" FontFamily="FontAwesome" FontSize="{OnIdiom Phone=14, Default=20}" TextColor="#28A745" HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </Border>
+                        <Label Text="TANK INFO" FontSize="{OnIdiom Phone=9, Default=12}" FontAttributes="Bold" TextColor="#28A745" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+                    </VerticalStackLayout>
+                    
+                    <VerticalStackLayout Grid.Column="1" HorizontalOptions="Center" Spacing="5" helpers:CursorHelper.IsPointer="True">
+                        <VerticalStackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnUploadPhotosTapped" />
+                        </VerticalStackLayout.GestureRecognizers>
+                        <Border StrokeShape="{OnIdiom Phone='RoundRectangle 18', Default='RoundRectangle 25'}" HeightRequest="{OnIdiom Phone=36, Default=50}" WidthRequest="{OnIdiom Phone=36, Default=50}" BackgroundColor="#E9ECEF" Padding="0" Stroke="Transparent" StrokeThickness="0">
+                            <Label Text="&#xf03e;" FontFamily="FontAwesome" FontSize="{OnIdiom Phone=14, Default=20}" TextColor="#28A745" HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </Border>
+                        <Label Text="UPLOAD PHOTOS" FontSize="{OnIdiom Phone=9, Default=12}" FontAttributes="Bold" TextColor="#28A745" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+                    </VerticalStackLayout>
+                    
+                    <VerticalStackLayout Grid.Column="2" HorizontalOptions="Center" Spacing="5" helpers:CursorHelper.IsPointer="True">
+                        <VerticalStackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnChecklistTapped" />
+                        </VerticalStackLayout.GestureRecognizers>
+                        <Border StrokeShape="{OnIdiom Phone='RoundRectangle 18', Default='RoundRectangle 25'}" HeightRequest="{OnIdiom Phone=36, Default=50}" WidthRequest="{OnIdiom Phone=36, Default=50}" BackgroundColor="#E9ECEF" Padding="0" Stroke="Transparent" StrokeThickness="0">
+                            <Label Text="&#xf046;" FontFamily="FontAwesome" FontSize="{OnIdiom Phone=14, Default=20}" TextColor="#28A745" HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </Border>
+                        <Label Text="CHECKLIST" FontSize="{OnIdiom Phone=9, Default=12}" FontAttributes="Bold" TextColor="#28A745" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+                    </VerticalStackLayout>
+                    
+                    <!-- Active -->
+                    <VerticalStackLayout Grid.Column="3" HorizontalOptions="Center" Spacing="5" helpers:CursorHelper.IsPointer="True">
+                        <Border StrokeShape="{OnIdiom Phone='RoundRectangle 18', Default='RoundRectangle 25'}" HeightRequest="{OnIdiom Phone=36, Default=50}" WidthRequest="{OnIdiom Phone=36, Default=50}" BackgroundColor="#28A745" Padding="0" Stroke="Transparent" StrokeThickness="0">
+                            <Label Text="&#xf06e;" FontFamily="FontAwesome" FontSize="{OnIdiom Phone=14, Default=20}" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </Border>
+                        <Label Text="REVIEW &amp; SUBMIT" FontSize="{OnIdiom Phone=9, Default=12}" FontAttributes="Bold" TextColor="#28A745" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+                    </VerticalStackLayout>
+                </Grid>
+            </Grid>
+
+            <!-- General Information Section -->
+            <HorizontalStackLayout Spacing="10" Margin="0,10,0,0" VerticalOptions="Center">
+                <Label Text="&#xf05a;" FontFamily="FontAwesome" FontSize="16" FontAttributes="Bold" TextColor="#1F3C59" VerticalOptions="Center"/>
+                <Label Text="General Information" FontSize="16" FontAttributes="Bold" TextColor="#1F3C59" VerticalOptions="Center"/>
+            </HorizontalStackLayout>
+            <Frame BackgroundColor="White" BorderColor="#E9ECEF" CornerRadius="5" Padding="{OnIdiom Phone=15, Default=20}" HasShadow="False" Margin="0,0,0,10">
+                <FlexLayout Wrap="Wrap" JustifyContent="SpaceBetween" AlignItems="Start">
+                    <VerticalStackLayout FlexLayout.Basis="{OnIdiom Phone=48%, Default=18%}" Margin="0,0,0,15">
+                        <Label Text="TANK NUMBER" FontSize="10" TextColor="#6C757D" FontAttributes="Bold"/>
+                        <Label x:Name="RevTankNumber" FontSize="13" TextColor="#1F3C59" FontAttributes="Bold"/>
+                    </VerticalStackLayout>
+                    <VerticalStackLayout FlexLayout.Basis="{OnIdiom Phone=48%, Default=18%}" Margin="0,0,0,15">
+                        <Label Text="REPORT NUMBER" FontSize="10" TextColor="#6C757D" FontAttributes="Bold"/>
+                        <Label x:Name="RevReportNumber" Text="Pending..." FontSize="13" TextColor="#1F3C59" FontAttributes="Bold"/>
+                    </VerticalStackLayout>
+                    <VerticalStackLayout FlexLayout.Basis="{OnIdiom Phone=48%, Default=18%}" Margin="0,0,0,15">
+                        <Label Text="DATE" FontSize="10" TextColor="#6C757D" FontAttributes="Bold"/>
+                        <Label x:Name="RevDate" FontSize="13" TextColor="#1F3C59" FontAttributes="Bold"/>
+                    </VerticalStackLayout>
+                    <VerticalStackLayout FlexLayout.Basis="{OnIdiom Phone=48%, Default=18%}" Margin="0,0,0,15">
+                        <Label Text="STATUS" FontSize="10" TextColor="#6C757D" FontAttributes="Bold"/>
+                        <Label x:Name="RevStatus" FontSize="13" TextColor="#007BFF" FontAttributes="Bold"/>
+                    </VerticalStackLayout>
+                    <VerticalStackLayout FlexLayout.Basis="{OnIdiom Phone=48%, Default=18%}" Margin="0,0,0,15">
+                        <Label Text="LOCATION" FontSize="10" TextColor="#6C757D" FontAttributes="Bold"/>
+                        <Label x:Name="RevLocation" FontSize="13" TextColor="#1F3C59" FontAttributes="Bold"/>
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout FlexLayout.Basis="{OnIdiom Phone=48%, Default=18%}" Margin="0,0,0,15">
+                        <Label Text="PRESSURE" FontSize="10" TextColor="#6C757D" FontAttributes="Bold"/>
+                        <Label x:Name="RevPressure" FontSize="13" TextColor="#1F3C59" FontAttributes="Bold"/>
+                    </VerticalStackLayout>
+                    <VerticalStackLayout FlexLayout.Basis="{OnIdiom Phone=48%, Default=18%}" Margin="0,0,0,15">
+                        <Label Text="TEMP" FontSize="10" TextColor="#6C757D" FontAttributes="Bold"/>
+                        <Label x:Name="RevTemp" FontSize="13" TextColor="#1F3C59" FontAttributes="Bold"/>
+                    </VerticalStackLayout>
+                    <VerticalStackLayout FlexLayout.Basis="{OnIdiom Phone=48%, Default=18%}" Margin="0,0,0,15">
+                        <Label Text="FRAME" FontSize="10" TextColor="#6C757D" FontAttributes="Bold"/>
+                        <Label x:Name="RevFrame" FontSize="13" TextColor="#1F3C59" FontAttributes="Bold"/>
+                    </VerticalStackLayout>
+                    <VerticalStackLayout FlexLayout.Basis="{OnIdiom Phone=48%, Default=18%}" Margin="0,0,0,15">
+                        <Label Text="CABINET" FontSize="10" TextColor="#6C757D" FontAttributes="Bold"/>
+                        <Label x:Name="RevCabinet" FontSize="13" TextColor="#1F3C59" FontAttributes="Bold"/>
+                    </VerticalStackLayout>
+                    <VerticalStackLayout FlexLayout.Basis="{OnIdiom Phone=100%, Default=18%}" Margin="0,0,0,15">
+                        <Label Text="NEXT PERIODIC INSPECTION DUE" FontSize="10" TextColor="#6C757D" FontAttributes="Bold"/>
+                        <Label x:Name="RevNextInspection" FontSize="13" TextColor="#28A745" FontAttributes="Bold"/>
+                    </VerticalStackLayout>
+                </FlexLayout>
+            </Frame>
+
+            <!-- Inspection Checklist Section -->
+            <HorizontalStackLayout Spacing="10" Margin="0,10,0,0" VerticalOptions="Center">
+                <Label Text="&#xf0ae;" FontFamily="FontAwesome" FontSize="16" FontAttributes="Bold" TextColor="#1F3C59" VerticalOptions="Center"/>
+                <Label Text="Inspection Checklist" FontSize="16" FontAttributes="Bold" TextColor="#1F3C59" VerticalOptions="Center"/>
+            </HorizontalStackLayout>
+            <Frame BackgroundColor="White" BorderColor="#E9ECEF" CornerRadius="5" Padding="0" HasShadow="False" Margin="0,0,0,10">
+                <CollectionView x:Name="RevChecklistCollectionView">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:ChecklistGroup">
+                            <VerticalStackLayout Spacing="0">
+                                <!-- Group Header -->
+                                <Grid ColumnDefinitions="*, Auto" Padding="15" BackgroundColor="#F8F9FA">
+                                    <Label Grid.Column="0" Text="{Binding JobName}" FontSize="13" FontAttributes="Bold" TextColor="#1F3C59" VerticalOptions="Center"/>
+                                    <Frame Grid.Column="1" BackgroundColor="#E8F5E9" CornerRadius="3" Padding="5,2" HasShadow="False">
+                                        <Label Text="OK" TextColor="#28A745" FontSize="10" FontAttributes="Bold"/>
+                                    </Frame>
+                                </Grid>
+                                
+                                <BoxView HeightRequest="1" Color="#E9ECEF"/>
+                                
+                                <!-- Group Items -->
+                                <StackLayout BindableLayout.ItemsSource="{Binding Items}">
+                                    <BindableLayout.ItemTemplate>
+                                        <DataTemplate x:DataType="models:ChecklistItem">
+                                            <VerticalStackLayout>
+                                                <Grid ColumnDefinitions="*, Auto" Padding="15">
+                                                    <VerticalStackLayout Grid.Column="0" Spacing="2">
+                                                        <Label Text="{Binding DisplayTitle}" FontSize="12" TextColor="#495057"/>
+                                                        <!-- Show Comment if fault resolved -->
+                                                        <Label Text="{Binding Comment, StringFormat='Comment: {0}'}" FontSize="10" TextColor="#DC3545" IsVisible="{Binding HasComment}"/>
+                                                        
+                                                        <!-- Show Assigned Photos -->
+                                                        <FlexLayout BindableLayout.ItemsSource="{Binding AssignedPhotos}" Wrap="Wrap" Margin="0,5,0,0">
+                                                            <BindableLayout.ItemTemplate>
+                                                                <DataTemplate x:DataType="models:PhotoUploadItem">
+                                                                    <VerticalStackLayout WidthRequest="80" Margin="0,0,10,5">
+                                                                        <Frame CornerRadius="5" Padding="0" HasShadow="False" HeightRequest="60" WidthRequest="80" BackgroundColor="#F8F9FA" BorderColor="#E9ECEF" IsClippedToBounds="True">
+                                                                            <Image Source="{Binding ImagePath}" Aspect="AspectFill" HeightRequest="60" WidthRequest="80"/>
+                                                                        </Frame>
+                                                                        <Label Text="{Binding Category.Key}" FontSize="8" FontAttributes="Bold" TextColor="#1F3C59" Margin="0,2,0,0" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+                                                                    </VerticalStackLayout>
+                                                                </DataTemplate>
+                                                            </BindableLayout.ItemTemplate>
+                                                        </FlexLayout>
+                                                    </VerticalStackLayout>
+                                                    <Border Grid.Column="1" WidthRequest="20" HeightRequest="20" BackgroundColor="{Binding StatusColor}" Padding="0" StrokeShape="RoundRectangle 10" VerticalOptions="Center" />
+                                                </Grid>
+                                                <BoxView HeightRequest="1" Color="#E9ECEF"/>
+                                            </VerticalStackLayout>
+                                        </DataTemplate>
+                                    </BindableLayout.ItemTemplate>
+                                </StackLayout>
+                            </VerticalStackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Frame>
+
+            <!-- Captured Photos Section -->
+            <HorizontalStackLayout Spacing="10" Margin="0,10,0,0" VerticalOptions="Center">
+                <Label Text="&#xf03e;" FontFamily="FontAwesome" FontSize="16" FontAttributes="Bold" TextColor="#1F3C59" VerticalOptions="Center"/>
+                <Label Text="Captured Photos" FontSize="16" FontAttributes="Bold" TextColor="#1F3C59" VerticalOptions="Center"/>
+            </HorizontalStackLayout>
+            <Frame BackgroundColor="White" BorderColor="#E9ECEF" CornerRadius="5" Padding="20" HasShadow="False" Margin="0,0,0,20">
+                <FlexLayout x:Name="RevPhotosFlexLayout" Wrap="Wrap" JustifyContent="Start" AlignItems="Start" AlignContent="Start">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="models:PhotoUploadItem">
+                            <VerticalStackLayout WidthRequest="180" Margin="0,0,15,15">
+                                <Frame CornerRadius="8" Padding="0" HasShadow="False" HeightRequest="120" WidthRequest="180" BackgroundColor="#F8F9FA" BorderColor="#E9ECEF" IsClippedToBounds="True">
+                                    <Image Source="{Binding ImagePath}" Aspect="AspectFill" HeightRequest="120" WidthRequest="180"/>
+                                </Frame>
+                                <Label Text="{Binding Category.Name}" FontSize="12" FontAttributes="Bold" TextColor="#1F3C59" Margin="0,5,0,0" HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </FlexLayout>
+            </Frame>
+
+            <!-- Submit Button -->
+            <HorizontalStackLayout Spacing="{OnIdiom Phone=10, Default=15}" Margin="0,0,0,40" HorizontalOptions="End">
+                <Button Text="CANCEL" Clicked="OnCancelTapped" helpers:CursorHelper.IsPointer="True" BackgroundColor="#6C757D" TextColor="White" CornerRadius="5" WidthRequest="{OnIdiom Phone=100, Default=120}" HeightRequest="45" FontSize="{OnIdiom Phone=12, Default=14}" FontAttributes="Bold" Padding="0"/>
+                <Button x:Name="SubmitButton" Text="UPDATE FINAL REPORT" Clicked="OnSubmitTapped" helpers:CursorHelper.IsPointer="True" BackgroundColor="#28A745" TextColor="White" CornerRadius="5" WidthRequest="{OnIdiom Phone=150, Default=200}" HeightRequest="45" FontSize="{OnIdiom Phone=11, Default=14}" FontAttributes="Bold" Padding="0"/>
+            </HorizontalStackLayout>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

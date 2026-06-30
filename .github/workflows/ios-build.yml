@@ -1,0 +1,32 @@
+name: Build iOS App
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  workflow_dispatch:
+
+jobs:
+  build-ios:
+    runs-on: macos-13
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup .NET 9
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '9.0.x'
+
+    - name: Install MAUI Workloads
+      run: dotnet workload install maui-ios
+
+    - name: Build iOS App (Without Signing)
+      run: dotnet publish "ISOTankApp/ISOTankApp.csproj" -f net9.0-ios -c Release -p:BuildIpa=true -p:ApplicationDisplayVersion=1.0 -p:ApplicationVersion=1
+
+    - name: Upload iOS IPA Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: ISOTankApp-iOS
+        path: ISOTankApp/bin/Release/net9.0-ios/iossimulator-x64/**/*.app
+        # Note: Without Apple Developer certificates, an unsigned .app package is built instead of a signed .ipa.
+        # Your lead can sign this .app package on their end using their certificates.

@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:helpers="clr-namespace:ISOTankApp.Helpers"
+             xmlns:controls="clr-namespace:ISOTankApp.Controls"
+             x:Class="ISOTankApp.Views.TankInfoPage"
+             Title="Tank Info"
+             BackgroundColor="#F3F5F7"
+             Shell.NavBarIsVisible="False"
+             Shell.TabBarIsVisible="False">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="30" Spacing="20">
+
+            <!-- Header -->
+            <HorizontalStackLayout Spacing="10" Margin="0,0,0,10">
+                <Label Text="&#xf060;" FontFamily="FontAwesome" FontSize="14" TextColor="#6C757D" VerticalOptions="Center"/>
+                <Label x:Name="PageTitleHeader" Text="NEW REPORT" FontSize="14" FontAttributes="Bold" TextColor="#1F3C59" VerticalOptions="Center" TextTransform="Uppercase"/>
+            </HorizontalStackLayout>
+
+            <!-- Custom Tab Bar -->
+            <Grid Margin="0,0,0,20">
+                <BoxView HeightRequest="2" Color="#E9ECEF" VerticalOptions="Start" Margin="50,24,50,0" />
+                <Grid ColumnDefinitions="*,*,*,*">
+                    <!-- Active -->
+                    <VerticalStackLayout Grid.Column="0" HorizontalOptions="Center" Spacing="5" helpers:CursorHelper.IsPointer="True">
+                        <Border StrokeShape="{OnIdiom Phone='RoundRectangle 18', Default='RoundRectangle 25'}" HeightRequest="{OnIdiom Phone=36, Default=50}" WidthRequest="{OnIdiom Phone=36, Default=50}" BackgroundColor="#28A745" Padding="0" Stroke="Transparent" StrokeThickness="0">
+                            <Label Text="&#xf0ae;" FontFamily="FontAwesome" FontSize="{OnIdiom Phone=14, Default=20}" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </Border>
+                        <Label Text="TANK INFO" FontSize="{OnIdiom Phone=9, Default=12}" FontAttributes="Bold" TextColor="#28A745" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+                    </VerticalStackLayout>
+                    
+                    <VerticalStackLayout Grid.Column="1" HorizontalOptions="Center" Spacing="5" helpers:CursorHelper.IsPointer="True">
+                        <VerticalStackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnUploadPhotosTapped" />
+                        </VerticalStackLayout.GestureRecognizers>
+                        <Border x:Name="TabUploadPhotosCircle" StrokeShape="{OnIdiom Phone='RoundRectangle 18', Default='RoundRectangle 25'}" HeightRequest="{OnIdiom Phone=36, Default=50}" WidthRequest="{OnIdiom Phone=36, Default=50}" BackgroundColor="#E9ECEF" Padding="0" Stroke="Transparent" StrokeThickness="0">
+                            <Label Text="&#xf03e;" FontFamily="FontAwesome" FontSize="{OnIdiom Phone=14, Default=20}" TextColor="#28A745" HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </Border>
+                        <Label x:Name="TabUploadPhotosText" Text="UPLOAD PHOTOS" FontSize="{OnIdiom Phone=9, Default=12}" FontAttributes="Bold" TextColor="#28A745" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+                    </VerticalStackLayout>
+                    
+                    <VerticalStackLayout Grid.Column="2" HorizontalOptions="Center" Spacing="5" helpers:CursorHelper.IsPointer="True">
+                        <VerticalStackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnChecklistTapped" />
+                        </VerticalStackLayout.GestureRecognizers>
+                        <Border StrokeShape="{OnIdiom Phone='RoundRectangle 18', Default='RoundRectangle 25'}" HeightRequest="{OnIdiom Phone=36, Default=50}" WidthRequest="{OnIdiom Phone=36, Default=50}" BackgroundColor="#E9ECEF" Padding="0" Stroke="Transparent" StrokeThickness="0">
+                            <Label Text="&#xf046;" FontFamily="FontAwesome" FontSize="{OnIdiom Phone=14, Default=20}" TextColor="#28A745" HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </Border>
+                        <Label Text="CHECKLIST" FontSize="{OnIdiom Phone=9, Default=12}" FontAttributes="Bold" TextColor="#28A745" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+                    </VerticalStackLayout>
+                    
+                    <VerticalStackLayout Grid.Column="3" HorizontalOptions="Center" Spacing="5" helpers:CursorHelper.IsPointer="True">
+                        <VerticalStackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnReviewTapped" />
+                        </VerticalStackLayout.GestureRecognizers>
+                        <Border StrokeShape="{OnIdiom Phone='RoundRectangle 18', Default='RoundRectangle 25'}" HeightRequest="{OnIdiom Phone=36, Default=50}" WidthRequest="{OnIdiom Phone=36, Default=50}" BackgroundColor="#E9ECEF" Padding="0" Stroke="Transparent" StrokeThickness="0">
+                            <Label Text="&#xf06e;" FontFamily="FontAwesome" FontSize="{OnIdiom Phone=14, Default=20}" TextColor="#28A745" HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </Border>
+                        <Label Text="REVIEW &amp; SUBMIT" FontSize="{OnIdiom Phone=9, Default=12}" FontAttributes="Bold" TextColor="#28A745" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+                    </VerticalStackLayout>
+                </Grid>
+            </Grid>
+
+            <FlexLayout Wrap="Wrap" JustifyContent="SpaceBetween" AlignItems="Start">
+                
+                <!-- Left Side: Form Container -->
+                <Frame FlexLayout.Basis="{OnIdiom Phone=100%, Default=66%}" Margin="{OnIdiom Phone='0,0,0,20', Default='0'}" BackgroundColor="White" CornerRadius="10" HasShadow="True" Padding="30" BorderColor="Transparent">
+                    <VerticalStackLayout Spacing="20">
+                        <Label Text="INSPECTION BASIC INFO" FontSize="20" FontAttributes="Bold" TextColor="#1F3C59" Margin="0,0,0,10"/>
+
+                        <Grid ColumnDefinitions="{OnIdiom Phone='*', Default='*, *'}" RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto" RowSpacing="25" ColumnSpacing="20">
+                            
+                            <!-- Tank Picker -->
+                            <VerticalStackLayout Grid.Row="0" Grid.Column="0" Spacing="8">
+                                <Label Text="SELECT TANK *" FontSize="12" FontAttributes="Bold" TextColor="#6C757D"/>
+                                <controls:CustomDropdown x:Name="TankPicker" Title="-- Search/Select Tank --" ItemDisplayBinding="Name" SelectedIndexChanged="OnTankSelected" />
+                            </VerticalStackLayout>
+
+                            <!-- Tank Status Picker -->
+                            <VerticalStackLayout Grid.Row="{OnIdiom Phone=1, Default=0}" Grid.Column="{OnIdiom Phone=0, Default=1}" Spacing="8">
+                                <Label Text="TANK STATUS" FontSize="12" FontAttributes="Bold" TextColor="#6C757D"/>
+                                <controls:CustomDropdown x:Name="TankStatusPicker" Title="-- Select Status --" ItemDisplayBinding="Name" />
+                            </VerticalStackLayout>
+
+                            <!-- Inspection Type -->
+                            <VerticalStackLayout Grid.Row="{OnIdiom Phone=2, Default=1}" Grid.Column="0" Spacing="8">
+                                <Label Text="INSPECTION TYPE" FontSize="12" FontAttributes="Bold" TextColor="#6C757D"/>
+                                <controls:CustomDropdown x:Name="InspectionTypePicker" Title="-- Select Type --" ItemDisplayBinding="Name" />
+                            </VerticalStackLayout>
+
+                            <!-- Location Picker -->
+                            <VerticalStackLayout Grid.Row="{OnIdiom Phone=3, Default=1}" Grid.Column="{OnIdiom Phone=0, Default=1}" Spacing="8">
+                                <Label Text="LOCATION TYPE" FontSize="12" FontAttributes="Bold" TextColor="#6C757D"/>
+                                <controls:CustomDropdown x:Name="LocationPicker" Title="-- Select Location --" ItemDisplayBinding="Name" />
+                            </VerticalStackLayout>
+
+                            <!-- Vacuum Reading -->
+                            <VerticalStackLayout Grid.Row="{OnIdiom Phone=4, Default=2}" Grid.Column="0" Spacing="8">
+                                <Label Text="VACUUM READING" FontSize="12" FontAttributes="Bold" TextColor="#6C757D"/>
+                                <Border Stroke="#CED4DA" StrokeThickness="1" BackgroundColor="White" Padding="10,0" StrokeShape="RoundRectangle 5" HeightRequest="45">
+                                    <Entry x:Name="VacuumReadingEntry" Placeholder="Enter value" TextColor="#495057" BackgroundColor="Transparent"/>
+                                </Border>
+                            </VerticalStackLayout>
+
+                            <!-- Vacuum UOM -->
+                            <VerticalStackLayout Grid.Row="{OnIdiom Phone=5, Default=2}" Grid.Column="{OnIdiom Phone=0, Default=1}" Spacing="8">
+                                <Label Text="VACUUM UOM" FontSize="12" FontAttributes="Bold" TextColor="#6C757D"/>
+                                <controls:CustomDropdown x:Name="VacuumUomPicker" Title="Select UOM" />
+                            </VerticalStackLayout>
+
+                            <!-- Lifter Weight -->
+                            <VerticalStackLayout Grid.Row="{OnIdiom Phone=6, Default=3}" Grid.Column="0" Spacing="8">
+                                <Label Text="LIFTER WEIGHT" FontSize="12" FontAttributes="Bold" TextColor="#6C757D"/>
+                                <Border Stroke="#CED4DA" StrokeThickness="1" BackgroundColor="White" Padding="10,0" StrokeShape="RoundRectangle 5" HeightRequest="45">
+                                    <Entry x:Name="LifterWeightEntry" Placeholder="Enter weight" TextColor="#495057" BackgroundColor="Transparent"/>
+                                </Border>
+                            </VerticalStackLayout>
+
+                            <!-- Safety Valve -->
+                            <VerticalStackLayout Grid.Row="{OnIdiom Phone=7, Default=3}" Grid.Column="{OnIdiom Phone=0, Default=1}" Spacing="8">
+                                <Label Text="SAFETY VALVE BRAND" FontSize="12" FontAttributes="Bold" TextColor="#6C757D"/>
+                                <controls:CustomDropdown x:Name="SafetyValvePicker" Title="-- Select Brand --" ItemDisplayBinding="Name" />
+                            </VerticalStackLayout>
+
+                        </Grid>
+
+                        <HorizontalStackLayout Spacing="{OnIdiom Phone=10, Default=15}" Margin="0,30,0,0" HorizontalOptions="End">
+                            <Button Text="CANCEL" helpers:CursorHelper.IsPointer="True" BackgroundColor="#6C757D" TextColor="White" CornerRadius="5" WidthRequest="{OnIdiom Phone=100, Default=120}" HeightRequest="45" FontSize="{OnIdiom Phone=12, Default=14}" FontAttributes="Bold" Padding="0"/>
+                            <Button Text="SAVE &amp; NEXT" Clicked="OnSaveClicked" helpers:CursorHelper.IsPointer="True" BackgroundColor="#28A745" TextColor="White" CornerRadius="5" WidthRequest="{OnIdiom Phone=120, Default=160}" HeightRequest="45" FontSize="{OnIdiom Phone=12, Default=14}" FontAttributes="Bold" Padding="0"/>
+                        </HorizontalStackLayout>
+                        
+                        <ActivityIndicator x:Name="LoadingSpinner" IsRunning="False" IsVisible="False" HorizontalOptions="Start" Margin="0,10,0,0" />
+
+                    </VerticalStackLayout>
+                </Frame>
+
+                <!-- Right Side: Master Data Panel -->
+                <Frame x:Name="MasterDataPanel" FlexLayout.Basis="{OnIdiom Phone=100%, Default=32%}" BackgroundColor="#5b6c77" CornerRadius="10" HasShadow="True" Padding="25" BorderColor="Transparent" VerticalOptions="Start">
+                    <VerticalStackLayout Spacing="10">
+                        <Label Text="TANK SPECS" FontSize="16" FontAttributes="Bold" TextColor="White" />
+                        <Label Text="MASTER DATA" FontSize="12" FontAttributes="Bold" TextColor="#B0BEC5" Margin="0,-5,0,15"/>
+                        
+                        <Grid ColumnDefinitions="*, *" RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto" RowSpacing="15">
+                            <Label Grid.Row="0" Grid.Column="0" Text="MFGR NAME" FontSize="12" FontAttributes="Bold" TextColor="#B0BEC5" VerticalOptions="Center"/>
+                            <Label Grid.Row="0" Grid.Column="1" x:Name="SpecMfgr" Text="-" FontSize="12" FontAttributes="Bold" TextColor="White" HorizontalOptions="End" VerticalOptions="Center"/>
+                            
+                            <Label Grid.Row="1" Grid.Column="0" Text="OWNERSHIP" FontSize="12" FontAttributes="Bold" TextColor="#B0BEC5" VerticalOptions="Center"/>
+                            <Label Grid.Row="1" Grid.Column="1" x:Name="SpecOwnership" Text="-" FontSize="12" FontAttributes="Bold" TextColor="White" HorizontalOptions="End" VerticalOptions="Center"/>
+                            
+                            <Label Grid.Row="2" Grid.Column="0" Text="PRESSURE" FontSize="12" FontAttributes="Bold" TextColor="#B0BEC5" VerticalOptions="Center"/>
+                            <Label Grid.Row="2" Grid.Column="1" x:Name="SpecPressure" Text="-" FontSize="12" FontAttributes="Bold" TextColor="White" HorizontalOptions="End" VerticalOptions="Center"/>
+                            
+                            <Label Grid.Row="3" Grid.Column="0" Text="TEMP" FontSize="12" FontAttributes="Bold" TextColor="#B0BEC5" VerticalOptions="Center"/>
+                            <Label Grid.Row="3" Grid.Column="1" x:Name="SpecTemp" Text="-" FontSize="12" FontAttributes="Bold" TextColor="White" HorizontalOptions="End" VerticalOptions="Center"/>
+                            
+                            <Label Grid.Row="4" Grid.Column="0" Text="FRAME" FontSize="12" FontAttributes="Bold" TextColor="#B0BEC5" VerticalOptions="Center"/>
+                            <Label Grid.Row="4" Grid.Column="1" x:Name="SpecFrame" Text="-" FontSize="12" FontAttributes="Bold" TextColor="White" HorizontalOptions="End" VerticalOptions="Center"/>
+                            
+                            <Label Grid.Row="5" Grid.Column="0" Text="CABINET" FontSize="12" FontAttributes="Bold" TextColor="#B0BEC5" VerticalOptions="Center"/>
+                            <Label Grid.Row="5" Grid.Column="1" x:Name="SpecCabinet" Text="-" FontSize="12" FontAttributes="Bold" TextColor="White" HorizontalOptions="End" VerticalOptions="Center"/>
+                            
+                            <Label Grid.Row="6" Grid.Column="0" Text="S/V BRAND" FontSize="12" FontAttributes="Bold" TextColor="#B0BEC5" VerticalOptions="Center"/>
+                            <Label Grid.Row="6" Grid.Column="1" x:Name="SpecSVBrand" Text="-" FontSize="12" FontAttributes="Bold" TextColor="White" HorizontalOptions="End" VerticalOptions="Center"/>
+                        </Grid>
+
+                        <BoxView HeightRequest="1" BackgroundColor="#B0BEC5" Margin="0,15,0,15" Opacity="0.3"/>
+
+                        <Label Text="NEXT PERIODIC INSPECTION DUE" FontSize="12" FontAttributes="Bold" TextColor="#B0BEC5" HorizontalOptions="Center"/>
+                        <Label x:Name="SpecNextInspection" Text="NOT SET" FontSize="16" FontAttributes="Bold" TextColor="#4CAF50" HorizontalOptions="Center"/>
+                    </VerticalStackLayout>
+                </Frame>
+
+            </FlexLayout>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

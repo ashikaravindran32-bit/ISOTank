@@ -1,0 +1,86 @@
+[
+  {
+    "ContainingType": "ISOTankAPI.Controllers.ChecklistController",
+    "Method": "GetChecklistTemplate",
+    "RelativePath": "api/Checklist/template",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ISOTankAPI.Controllers.InspectionController",
+    "Method": "SaveBasicInfo",
+    "RelativePath": "api/Inspection/basic-info",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "info",
+        "Type": "ISOTankAPI.Models.InspectionBasicInfo",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ISOTankAPI.Controllers.InspectionController",
+    "Method": "GetBasicInfo",
+    "RelativePath": "api/Inspection/basic-info/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ISOTankAPI.Controllers.InspectionController",
+    "Method": "SubmitFull",
+    "RelativePath": "api/Inspection/submit-full",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "payload",
+        "Type": "ISOTankAPI.Models.InspectionPayload",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ISOTankAPI.Controllers.MasterDataController",
+    "Method": "GetMasterData",
+    "RelativePath": "api/MasterData",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Program\u002B\u003C\u003Ec",
+    "Method": "\u003C\u003CMain\u003E$\u003Eb__0_0",
+    "RelativePath": "health",
+    "HttpMethod": "GET",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 200
+      }
+    ]
+  }
+]

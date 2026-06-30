@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="ISOTankApp.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:ISOTankApp.Views"
+    Title="ISO Tank Management">
+
+    <TabBar>
+        <Tab Title="Tank Info" Icon="info_icon.png">
+            <ShellContent ContentTemplate="{DataTemplate views:TankInfoPage}" />
+        </Tab>
+        <Tab Title="Upload Photos" Icon="photo_icon.png">
+            <ShellContent ContentTemplate="{DataTemplate views:UploadPhotosPage}" />
+        </Tab>
+        <Tab Title="Checklist" Icon="checklist_icon.png">
+            <ShellContent ContentTemplate="{DataTemplate views:ChecklistPage}" />
+        </Tab>
+        <Tab Title="Review &amp; Submit" Icon="submit_icon.png">
+            <ShellContent ContentTemplate="{DataTemplate views:ReviewSubmitPage}" />
+        </Tab>
+    </TabBar>
+
+</Shell>
