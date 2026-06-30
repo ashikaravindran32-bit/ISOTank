@@ -1,1 +1,44 @@
 
+
+workflows:
+  ios-release:
+    name: Build .NET MAUI iOS
+
+    instance_type: mac_mini_m2
+
+    environment:
+      xcode: latest
+      vars:
+        PROJECT_PATH: ISOTankApp/ISOTankApp.csproj
+
+    scripts:
+      - name: Install .NET 9 SDK
+        script: |
+          brew install --cask dotnet-sdk
+          export PATH=$PATH:/usr/local/share/dotnet
+          dotnet --version
+
+      - name: Install MAUI workload
+        script: |
+          dotnet workload install maui
+
+      - name: Restore packages
+        script: |
+          dotnet restore $PROJECT_PATH
+
+      - name: Publish iOS IPA
+        script: |
+          dotnet publish $PROJECT_PATH \
+            -f net9.0-ios \
+            -c Release \
+            /p:ArchiveOnBuild=true
+
+    artifacts:
+      - "**/*.ipa"
+      - "**/*.xcarchive"
+      - "**/*.app"
+
+    publishing:
+      email:
+        recipients:
+          - your-email@example.com
